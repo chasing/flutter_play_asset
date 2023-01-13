@@ -45,7 +45,7 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      channel = MethodChannel(registrar.messenger(), "flutter_play_asset")
+      var channel = MethodChannel(registrar.messenger(), "flutter_play_asset")
       channel.setMethodCallHandler(FlutterPlayAssetPlugin())
     }
   }
