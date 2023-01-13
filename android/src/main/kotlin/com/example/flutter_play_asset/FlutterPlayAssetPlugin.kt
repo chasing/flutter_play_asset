@@ -106,7 +106,7 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   private fun getAbsoluteAssetPath(assetPack: String) {
     channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Checking asset path...")
     val assetPackPath = assetPackManager!!.getPackLocation(assetPack)
-    val assetsFolderPath = assetPackPath?.assetsPath()
+    val assetsFolderPath: String = assetPackPath?.assetsPath() ?? "NO PATH"
     if (assetsFolderPath!=null){
       try {
         val file = File(assetsFolderPath)
