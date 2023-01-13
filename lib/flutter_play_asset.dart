@@ -10,7 +10,7 @@ class FlutterPlayAsset {
   ViewPlayAsset view;
 
   init(ViewPlayAsset vw){
-    print("JOSHX Hello, world.");
+    print("JOSHX Hello, world. Again.");
     view = vw;
     platform.setMethodCallHandler((call) {
       print('platform channel method call ${call.method} ${call.arguments}');
