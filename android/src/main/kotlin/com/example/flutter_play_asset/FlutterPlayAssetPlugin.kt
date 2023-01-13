@@ -34,20 +34,18 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   val FLUTTER_METHOD_PLAYASSET_DOWNLOAD = "playasset"
   val FLUTTER_METHOD_DOWNLOAD_PROGRESS_UPDATE = "playasset_download_pprogress_update"
   val CHANNEL = "basictomodular/downloadservice"
-  lateinit var methodChannel: MethodChannel
   lateinit var assetPackManager: AssetPackManager
   lateinit var package_name : String
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), CHANNEL)
-    channel.setMethodCallHandler(this);
-    methodChannel.setMethodCallHandler(::onMethodCall)
+    channel.setMethodCallHandler(this)
   }
 
   companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), "flutter_play_asset")
+      channel = MethodChannel(registrar.messenger(), "flutter_play_asset")
       channel.setMethodCallHandler(FlutterPlayAssetPlugin())
     }
   }
@@ -79,7 +77,7 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
         AssetPackStatus.COMPLETED -> {
           Log.d("PUZZLE", "COMPLETED")
         }
-        AssetPackStatus.DOWNLOADING -> methodChannel.invokeMethod(FLUTTER_METHOD_DOWNLOAD_PROGRESS_UPDATE, state.transferProgressPercentage())
+        AssetPackStatus.DOWNLOADING -> channel.invokeMethod(FLUTTER_METHOD_DOWNLOAD_PROGRESS_UPDATE, state.transferProgressPercentage())
         AssetPackStatus.FAILED ->  {
           Log.d("PUZZLE", "FAILED")
         }
@@ -106,36 +104,36 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   }
 
   private fun getAbsoluteAssetPath(assetPack: String) {
-    methodChannel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Checking asset path...")
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Checking asset path...")
     val assetPackPath = assetPackManager!!.getPackLocation(assetPack)
     val assetsFolderPath = assetPackPath?.assetsPath()
     if (assetsFolderPath!=null){
       try {
         val file = File(assetsFolderPath)
         if (file.isDirectory) {
-          methodChannel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, assetsFolderPath)
+          channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, assetsFolderPath)
         } else {
-          methodChannel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Error: " +assetsFolderPath+" not directory...")
+          channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Error: " +assetsFolderPath+" not directory...")
         }
       } catch (e: Exception){
-        methodChannel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Error: " + e.message + "...")
+        channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Error: " + e.message + "...")
       }
     } else {
-      methodChannel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, assetsFolderPath+" is null...")
+      channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, assetsFolderPath+" is null...")
       downloadPack(assetPack)
     }
   }
 
   private fun downloadPack(assetPack: String){
     package_name = assetPack
-    methodChannel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Start download pack "+ assetPack +"...")
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Start download pack "+ assetPack +"...")
     val list: MutableList<String> = ArrayList()
     list.add(assetPack)
     assetPackManager!!.fetch(list).addOnSuccessListener {
-      methodChannel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Success download pack "+ assetPack +"...")
+      channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Success download pack "+ assetPack +"...")
       getAbsoluteAssetPath(assetPack)
     }.addOnFailureListener {
-      methodChannel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Failed download pack "+ assetPack +"...")
+      channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Failed download pack "+ assetPack +"...")
     }
   }
 
