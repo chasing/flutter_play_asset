@@ -7,7 +7,7 @@ class FlutterPlayAsset {
   final String METHOD_DOWNLOAD_PROGRESS_UPDATE = "playasset_download_pprogress_update";
   final String METHOD_GETASSET = "get_asset";
   static const platform = MethodChannel('basictomodular/downloadservice');
-  ViewPlayAsset view;
+  late ViewPlayAsset view;
 
   init(ViewPlayAsset vw) {
     print("JOSHX Hello, world. Again.");
@@ -23,7 +23,6 @@ class FlutterPlayAsset {
       } else if (call.method == METHOD_DOWNLOAD_PROGRESS_UPDATE) {
         view.OnProgressDownload(call.arguments);
       }
-      return;
     });
   }
 
