@@ -38,7 +38,6 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   lateinit var package_name : String
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "onAttachedToEngine... flutterPluginBinding " + flutterPluginBinding)
     channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), CHANNEL)
     channel.setMethodCallHandler(this)
   }
