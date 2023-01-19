@@ -38,6 +38,7 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   lateinit var package_name : String
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "onAttachedToEngine... flutterPluginBinding " + flutterPluginBinding)
     channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), CHANNEL)
     channel.setMethodCallHandler(this)
   }
@@ -70,7 +71,7 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   var mAssetPackStateUpdateListener: AssetPackStateUpdateListener = object : AssetPackStateUpdateListener {
     override fun onStateUpdate(state: AssetPackState) {
       var x = state.status()
-      channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "AssetPackStatus... x" + x.toString())
+      channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "AssetPackStatus... x " + x.toString())
       when(x){
         AssetPackStatus.CANCELED -> {
           Log.d("PUZZLE", "JOSHX RESULT CANCELED")
@@ -105,12 +106,12 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   }
 
   private fun getAbsoluteAssetPath(assetPack: String) {
-    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Checking asset path..." + assetPack)
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Checking asset path... " + assetPack)
     val assetPackPath = assetPackManager!!.getPackLocation(assetPack)
-    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... assetPackManager" + assetPackManager)
-    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... assetPackPath" + assetPackPath)
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... assetPackManager " + assetPackManager)
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... assetPackPath " + assetPackPath)
     val assetsFolderPath = assetPackPath?.assetsPath()
-    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... assetsFolderPath" + assetsFolderPath)
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... assetsFolderPath " + assetsFolderPath)
     if (assetsFolderPath!=null){
       try {
         channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... 1")
@@ -152,7 +153,7 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
     ctx = binding.activity.applicationContext
     assetPackManager = AssetPackManagerFactory.getInstance(ctx)
-    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "onAttachedToActivity... assetPackManager" + assetPackManager)
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "onAttachedToActivity... assetPackManager " + assetPackManager)
     Log.d("PUZZLE", "JOSHX RESULT assetPackManager: " + assetPackManager)
     assetPackManager!!.registerListener(mAssetPackStateUpdateListener)
   }
