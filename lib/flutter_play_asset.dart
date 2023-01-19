@@ -23,6 +23,7 @@ class FlutterPlayAsset {
       } else if (call.method == METHOD_DOWNLOAD_PROGRESS_UPDATE) {
         view.OnProgressDownload(call.arguments);
       }
+      throw '';
     });
   }
 
