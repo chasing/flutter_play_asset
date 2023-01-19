@@ -142,6 +142,7 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
     ctx = binding.activity.applicationContext
     assetPackManager = AssetPackManagerFactory.getInstance(ctx)
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "onAttachedToActivity... assetPackManager" + assetPackManager)
     Log.d("PUZZLE", "JOSHX RESULT assetPackManager: " + assetPackManager)
     assetPackManager!!.registerListener(mAssetPackStateUpdateListener)
   }
