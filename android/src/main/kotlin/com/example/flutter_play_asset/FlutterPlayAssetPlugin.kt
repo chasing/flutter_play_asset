@@ -70,6 +70,7 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   var mAssetPackStateUpdateListener: AssetPackStateUpdateListener = object : AssetPackStateUpdateListener {
     override fun onStateUpdate(state: AssetPackState) {
       var x = state.status()
+      channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "AssetPackStatus..." + AssetPackStatus)
       when(x){
         AssetPackStatus.CANCELED -> {
           Log.d("PUZZLE", "JOSHX RESULT CANCELED")
