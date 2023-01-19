@@ -105,22 +105,33 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
   }
 
   private fun getAbsoluteAssetPath(assetPack: String) {
-    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Checking asset path...")
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Checking asset path..." + assetPack)
     val assetPackPath = assetPackManager!!.getPackLocation(assetPack)
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... assetPackManager" + assetPackManager)
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... assetPackPath" + assetPackPath)
     val assetsFolderPath = assetPackPath?.assetsPath()
+    channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... assetsFolderPath" + assetsFolderPath)
     if (assetsFolderPath!=null){
       try {
+        channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... 1")
         val file = File(assetsFolderPath)
+        channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... 2")
         if (file.isDirectory) {
+          channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... 3")
           channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, assetsFolderPath)
         } else {
+          channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... 4")
           channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Error: " +assetsFolderPath+" not directory...")
         }
+        channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... 5")
       } catch (e: Exception){
+        channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... 6")
         channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "Error: " + e.message + "...")
       }
     } else {
+      channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... 7")
       channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, assetsFolderPath+" is null...")
+      channel.invokeMethod(FLUTTER_METHOD_PLAYASSET_DOWNLOAD, "getAbsoluteAssetPath... 8")
       downloadPack(assetPack)
     }
   }
