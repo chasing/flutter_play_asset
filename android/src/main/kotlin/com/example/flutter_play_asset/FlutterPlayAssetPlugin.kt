@@ -72,32 +72,32 @@ public class FlutterPlayAssetPlugin: FlutterPlugin, MethodCallHandler, ActivityA
       var x = state.status()
       when(x){
         AssetPackStatus.CANCELED -> {
-          Log.d("PUZZLE", "CANCELED")
+          Log.d("PUZZLE", "JOSHX RESULT CANCELED")
         }
         AssetPackStatus.COMPLETED -> {
-          Log.d("PUZZLE", "COMPLETED")
+          Log.d("PUZZLE", "JOSHX RESULT COMPLETED")
         }
         AssetPackStatus.DOWNLOADING -> channel.invokeMethod(FLUTTER_METHOD_DOWNLOAD_PROGRESS_UPDATE, state.transferProgressPercentage())
         AssetPackStatus.FAILED ->  {
-          Log.d("PUZZLE", "FAILED")
+          Log.d("PUZZLE", "JOSHX RESULT FAILED")
         }
         AssetPackStatus.NOT_INSTALLED ->  {
-          Log.d("PUZZLE", "NOT_INSTALLED")
+          Log.d("PUZZLE", "JOSHX RESULT NOT_INSTALLED")
         }
         AssetPackStatus.PENDING ->  {
-          Log.d("PUZZLE", "PENDING")
+          Log.d("PUZZLE", "JOSHX RESULT PENDING")
         }
         AssetPackStatus.TRANSFERRING ->  {
-          Log.d("PUZZLE", "TRANSFERRING")
+          Log.d("PUZZLE", "JOSHX RESULT TRANSFERRING")
         }
         AssetPackStatus.UNKNOWN ->  {
-          Log.d("PUZZLE", "UNKNOWN")
+          Log.d("PUZZLE", "JOSHX RESULT UNKNOWN")
         }
         AssetPackStatus.WAITING_FOR_WIFI ->  {
-          Log.d("PUZZLE", "WAITING_FOR_WIFI")
+          Log.d("PUZZLE", "JOSHX RESULT WAITING_FOR_WIFI")
         }
         else ->  {
-          Log.d("PUZZLE", state.status().toString())
+          Log.d("PUZZLE", "JOSHX RESULT " + state.status().toString())
         }
       }
     }
